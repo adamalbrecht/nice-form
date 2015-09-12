@@ -7,7 +7,8 @@ class Form extends Component {
     initialData: PropTypes.object.isRequired,
     validator: PropTypes.func,
     onInvalidSubmit: PropTypes.func,
-    onValidSubmit: PropTypes.func.isRequired
+    onValidSubmit: PropTypes.func.isRequired,
+    onChange: PropTypes.func
   }
   static childContextTypes = {
     handleInputChange: PropTypes.func,
@@ -52,6 +53,7 @@ class Form extends Component {
   }
 
   handleInputChange = (inputName, value) => {
+    const oldValue = this.state.formData[inputName];
     const updatedFormData = { ...this.state.formData, [inputName]: value };
     const changed = (this.state.formData[inputName] !== value);
     const changedFromInitial = (this.props.initialData[inputName] !== value);
@@ -77,6 +79,9 @@ class Form extends Component {
       valid: valid,
       invalid: !valid
     });
+    if (this.props.onChange) {
+      this.props.onChange(updatedFormData, inputName, value, oldValue);
+    }
   }
 
   getBaseErrors = () => {

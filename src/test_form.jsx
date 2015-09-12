@@ -34,9 +34,11 @@ class TestForm extends Component {
     console.log('submitted with errors!', errors);
   }
 
+  handleChange = (formData, inputName, newValue, oldValue) => console.log('CHANGE!', `${inputName}: '${oldValue}' => '${newValue}'`)
+
   render() {
     return (
-      <Form initialData={{hello: null, foo: 'bar'}} validator={this.validateForm} onValidSubmit={this.handleValidSubmit} onInvalidSubmit={this.handleInvalidSubmit}>
+      <Form initialData={{hello: null, foo: 'bar'}} validator={this.validateForm} onChange={this.handleChange} onValidSubmit={this.handleValidSubmit} onInvalidSubmit={this.handleInvalidSubmit}>
         <Form.ErrorList baseOnly={true} />
         <Input type='text' label='Hello' name='hello' />
         <NestedFieldset />
