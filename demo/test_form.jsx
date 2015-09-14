@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import Form from '../src/form.jsx';
 import Input from './input.jsx';
-import isBlank from './is_blank';
+import isBlank from '../src/util/is_blank';
 
 class NestedFieldset extends Component {
   render() {

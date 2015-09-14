@@ -5,7 +5,7 @@ module.exports = function (config) {
   config.set({
     browsers: [ 'PhantomJS' ],
     singleRun: true,
-    frameworks: [ 'mocha', 'es5-shim', 'sinon-chai'],
+    frameworks: [ 'mocha', 'es5-shim', 'chai-jquery', 'jquery-2.1.0', 'sinon-chai'],
     files: [
       'src/**/*_test.jsx'
     ],
