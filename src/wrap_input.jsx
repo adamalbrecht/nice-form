@@ -44,7 +44,7 @@ export default function wrapInput(InputComponent) {
         <InputComponent
           {...this.props}
           value={this.context.getFieldValue(this.props.name)}
-          onChange={this.handleValueChange}
+          onValueChange={this.handleValueChange}
           valid={this.context.fieldIsValid(this.props.name)}
           invalid={!this.context.fieldIsValid(this.props.name)}
           pristine={this.context.fieldIsPristine(this.props.name)}

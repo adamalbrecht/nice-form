@@ -5,8 +5,8 @@ import RenderedTestComponent from './rendered_test_component';
 import { omit } from 'lodash';
 
 let minimumProps = {
-  formData: {},
-  metaData: {},
+  data: {},
+  metadata: {},
   onChange: data => null,
   onValidSubmit: data => null
 };
@@ -32,7 +32,7 @@ describe('Form', function() {
   });
   describe('with an input component and submit button', function() {
     beforeEach(function() {
-      const props = { ...minimumProps, formData: { foo: 'bar' } };
+      const props = { ...minimumProps, data: { foo: 'bar' } };
       form = new RenderedTestComponent(
         <Form2 { ...props }>
           <BasicInput name='foo' />
@@ -44,7 +44,7 @@ describe('Form', function() {
       expect(form.$element.find('input:text').length).to.equal(1);
       expect(form.$element.find('button').length).to.equal(1);
     });
-    it('fills in the input with the value from formData', function() {
+    it('fills in the input with the value from the form data', function() {
       expect(form.$element.find('input[name=foo]').val()).to.equal('bar');
     });
   });

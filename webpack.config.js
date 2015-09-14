@@ -4,7 +4,7 @@ var WebpackNotifierPlugin = require('webpack-notifier');
 var nodeModulesPath = path.resolve(__dirname, './node_modules');
 
 module.exports = {
-  serverPort: 9876,
+  serverPort: 4321,
   context: __dirname,
   entry: [
     "./demo/entry.jsx"

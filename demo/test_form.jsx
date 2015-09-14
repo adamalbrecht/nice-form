@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import Form from '../src/form.jsx';
+import Form from '../src/form2.jsx';
 import Input from './input.jsx';
 import isBlank from '../src/util/is_blank';
 
@@ -14,6 +14,16 @@ class NestedFieldset extends Component {
 }
 
 class TestForm extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      formData: {
+        hello: 'world'
+      },
+      formMetadata: {}
+    };
+  }
 
   validateForm = (data) => {
     let errors = {};
@@ -34,15 +44,30 @@ class TestForm extends Component {
     console.log('submitted with errors!', errors);
   }
 
-  handleChange = (formData, inputName, newValue, oldValue) => console.log('CHANGE!', `${inputName}: '${oldValue}' => '${newValue}'`)
+  handleChange = (updatedFormData, updatedMetadata, action, inputName) => {
+    console.log('form change!', action, inputName);
+    this.setState({
+      formData: updatedFormData,
+      formMetadata: updatedMetadata
+    });
+    console.log('New form data:', updatedFormData);
+    console.log('New form meta data:', updatedMetadata);
+  }
 
   render() {
     return (
-      <Form initialData={{hello: 'a', foo: 'bar'}} validator={this.validateForm} onChange={this.handleChange} onValidSubmit={this.handleValidSubmit} onInvalidSubmit={this.handleInvalidSubmit}>
-        <Form.ErrorList baseOnly={true} />
+      <Form
+        data={this.state.formData}
+        metadata={this.state.formMetadata}
+        validator={this.validateForm}
+        onChange={this.handleChange}
+        onValidSubmit={this.handleValidSubmit}
+        onInvalidSubmit={this.handleInvalidSubmit} >
+
         <Input type='text' label='Hello' name='hello' />
         <NestedFieldset />
         <button>Submit!</button>
+        
       </Form>
     );
   }
