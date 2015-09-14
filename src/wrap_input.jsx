@@ -61,7 +61,7 @@ export default function wrapInput(InputComponent) {
           dirty={!this.context.fieldIsPristine(this.props.name)}
           error={this.context.getFieldError(this.props.name)}
           onBlur={this.handleBlur}
-          hasBlurred={!this.context.fieldHasBlurred(this.props.name)}
+          hasBlurred={this.context.fieldHasBlurred(this.props.name)}
           formHasBeenSubmitted={this.context.formHasBeenSubmitted()}
           formIsValid={this.context.formIsValid()}
           formIsInvalid={!this.context.formIsValid()}

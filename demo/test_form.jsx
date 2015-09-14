@@ -46,6 +46,7 @@ class TestForm extends Component {
   }
 
   handleChange = (updatedFormData, updatedMetadata, action, inputName) => {
+    console.log('change!', action, inputName);
     this.setState({
       formData: updatedFormData,
       formMetadata: updatedMetadata

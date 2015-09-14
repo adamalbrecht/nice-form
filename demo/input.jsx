@@ -34,15 +34,19 @@ class Input extends Component {
 
   render() {
     return (
-      <div className='FieldWrapper'>
+      <div className='Field'>
         <label>{this.props.label}</label>
         <input
           ref='input'
           onChange={this.handleChange}
           {...this.props} />
-        { (this.props.hasBlurred || this.props.formHasBeenSubmitted) ? <span style={{color: 'red'}} className='FieldWrapper-errorMessage'>{this.props.error}</span> : null }
+        { this._showErrorMessage() ? <span className='Field-errorMessage'>{this.props.error}</span> : null }
       </div>
     );
+  }
+
+  _showErrorMessage() {
+    return (this.props.hasBlurred || this.props.formHasBeenSubmitted);
   }
 }
 
