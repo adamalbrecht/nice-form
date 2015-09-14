@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
-import Form from './form.jsx';
+import Form from '../src/form.jsx';
 import Input from './input.jsx';
-import isBlank from './util/is_blank';
+import isBlank from './is_blank';
 
 class NestedFieldset extends Component {
   render() {
@@ -38,7 +38,7 @@ class TestForm extends Component {
 
   render() {
     return (
-      <Form initialData={{hello: null, foo: 'bar'}} validator={this.validateForm} onChange={this.handleChange} onValidSubmit={this.handleValidSubmit} onInvalidSubmit={this.handleInvalidSubmit}>
+      <Form initialData={{hello: 'a', foo: 'bar'}} validator={this.validateForm} onChange={this.handleChange} onValidSubmit={this.handleValidSubmit} onInvalidSubmit={this.handleInvalidSubmit}>
         <Form.ErrorList baseOnly={true} />
         <Input type='text' label='Hello' name='hello' />
         <NestedFieldset />

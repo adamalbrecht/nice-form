@@ -7,7 +7,7 @@ module.exports = {
   serverPort: 9876,
   context: __dirname,
   entry: [
-    "./src/entry.jsx"
+    "./demo/entry.jsx"
   ],
   output: {
     path: "./priv/static/js",

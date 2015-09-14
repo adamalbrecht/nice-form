@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
-import { cloneDeep, isEmpty, some, without, includes, isArray, map, flatten, j } from 'lodash';
-import { humanize } from './util';
+import { cloneDeep, isEmpty, some, without, includes, isArray, map, flatten } from 'lodash';
+import FormErrorList from './form_errors.jsx';
 
 class Form extends Component {
   static propTypes = {
@@ -138,51 +138,7 @@ class Form extends Component {
   }
 }
 
-class FormErrors extends Component {
-  static contextTypes = {
-    formIsInvalid: PropTypes.func.isRequired,
-    formHasBeenSubmitted: PropTypes.func.isRequired,
-    getFormErrors: PropTypes.func.isRequired,
-    getBaseErrors: PropTypes.func.isRequired
-  };
 
-  static propTypes = {
-    baseOnly: PropTypes.bool,
-    className: PropTypes.string
-  };
-
-  static defaultProps = {
-    baseOnly: true,
-    className: 'FormErrors'
-  };
-
-  render() {
-    if (this.context.formIsInvalid() && this.context.formHasBeenSubmitted()) {
-      return (
-        <ul className={this.props.className}>
-          { map(this._getErrorList(), (err, i) => <li key={i}>{err}</li>) }
-        </ul>
-      );
-    } else {
-      return null;
-    }
-  }
-
-  _getErrorList() {
-    if (this.props.baseOnly) {
-      return this.context.getBaseErrors();
-    } else {
-      return flatten(map(this.context.getFormErrors(), (error, field) => {
-        if (field === 'base') {
-          return error;
-        } else {
-          return `${humanize(field)} ${error.toLowerCase()}`;
-        }
-      }));
-    }
-  }
-}
-
-Form.ErrorList = FormErrors;
+Form.ErrorList = FormErrorList;
 
 export default Form;

@@ -1,4 +1,4 @@
-import BaseInput from './base_input.jsx'
+import BaseInput from '../src/base_input.jsx'
 import React, { Component, PropTypes } from 'react';
 import { shallowEqual } from 'react-pure-render'
 
