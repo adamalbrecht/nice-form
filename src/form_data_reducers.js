@@ -36,7 +36,8 @@ export function applyChangeToFormMetadata(currentMetadata, inputName, newValue, 
   return updatedMetadata;
 }
 
-export function initializeFormMetadata(data, metadata, errors) {
+export function initializeFormMetadata(data, validator) {
+  const errors = validator(data);
   const initialFieldMetadata = reduce(data, (result, value, name) => {
     result[name] = {
       error: errors[name],
@@ -58,8 +59,7 @@ export function initializeFormMetadata(data, metadata, errors) {
     dirty: false,
     formHasBeenSubmitted: false,
     errors: errors,
-    fields: initialFieldMetadata,
-    ...metadata
+    fields: initialFieldMetadata
   };
 
   return initialMetadata;

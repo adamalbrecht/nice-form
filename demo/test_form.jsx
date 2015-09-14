@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import Form from '../src/form2.jsx';
+import { Form, initializeFormMetadata } from '../src';
 import Input from './input.jsx';
 import isBlank from '../src/util/is_blank';
 
@@ -17,12 +17,10 @@ class TestForm extends Component {
 
   constructor(props) {
     super(props);
+    const myModel = { hello: 'world', foo: null };
     this.state = {
-      formData: {
-        hello: 'world',
-        foo: null
-      },
-      formMetadata: {}
+      formData: myModel,
+      formMetadata: initializeFormMetadata(myModel, this.validateForm)
     };
   }
 

@@ -3,7 +3,6 @@ import { reduce, cloneDeep, some, without, includes, isArray, map, flatten } fro
 import FormErrorList from './form_errors.jsx';
 import isBlank from './util/is_blank';
 import {
-  initializeFormMetadata,
   applyChangeToFormData,
   applyChangeToFormMetadata,
   applyBlurToFormMetadata
@@ -60,17 +59,6 @@ class Form2 extends Component {
 
   constructor(props) {
     super(props);
-  }
-
-  componentWillMount() {
-    const errors = this.props.validator(this.props.data);
-    // Call onChange with updated metadata
-    this.props.onChange(
-      this.props.data,
-      initializeFormMetadata(this.props.data, this.props.metadata, errors),
-      'initialize',
-      null
-    );
   }
 
   getChildContext() {
