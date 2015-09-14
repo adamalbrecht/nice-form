@@ -42,6 +42,7 @@ class Form2 extends Component {
     fieldIsInvalid: PropTypes.func,
     fieldIsPristine: PropTypes.func,
     fieldIsDirty: PropTypes.func,
+    handleInputBlur: PropTypes.func,
     fieldHasBlurred: PropTypes.func
   };
 
@@ -76,6 +77,7 @@ class Form2 extends Component {
       pristine: true,
       dirty: false,
       formHasBeenSubmitted: false,
+      baseErrors: this._getBaseErrors(errors),
       fields: initialFieldMetaData,
       ...this.props.metadata
     };
@@ -90,7 +92,7 @@ class Form2 extends Component {
 
   getChildContext() {
     return {
-      handleInputChange: this.handleInputChange,
+      handleInputChange: this.handleChange,
       formIsValid: () => this.props.metadata.valid || true,
       formIsInvalid: () => this.props.metadata.invalid || false,
       formIsPristine: () => this.props.metadata.pristine || true,
@@ -102,11 +104,12 @@ class Form2 extends Component {
       fieldIsInvalid: (name) => this._getFieldMetaData(name, 'invalid') || false,
       fieldIsPristine: (name) => this._getFieldMetaData(name, 'pristine') || true,
       fieldIsDirty: (name) => this._getFieldMetaData(name, 'dirty') || false,
+      handleInputBlur: (name) => this.handleInputBlur(name),
       fieldHasBlurred: (name) => this._getFieldMetaData(name, 'hasBlurred') || false
     }
   }
 
-  handleInputChange = (inputName, value) => {
+  handleChange = (inputName, value) => {
     // Update data
     const updatedFormData = { ...this.props.data, [inputName]: value }
 
@@ -116,7 +119,9 @@ class Form2 extends Component {
     // Update field-level meta data
     let updatedMetaData = {
       ...this.props.metadata,
+      baseErrors: this._getBaseErrors(errors),
       fields: {
+        ...this.props.metadata.fields,
         [inputName]: this._getUpdatedFieldMetaData(inputName, value, errors[inputName])
       }
     };
@@ -135,16 +140,40 @@ class Form2 extends Component {
     );
   }
 
-  render() {
-    return(
-      <form noValidate>{this.props.children}</form>
+  handleInputBlur = (inputName) => {
+    let updatedFieldMetadata = this.props.metadata.fields ? { ...this.props.metadata.fields[inputName] } : {};
+    updatedFieldMetadata.hasBlurred = true;
+    this.props.onChange(
+      this.props.data,
+      { ...this.props.metadata, fields: { ...this.props.metadata.fields, [inputName]: updatedFieldMetadata } },
+      'input/blur',
+      inputName
     );
   }
 
-  _getUpdatedFieldMetaData(inputName, value, error) {
-    let fieldMetaData = { ...this.props.metadata.fields[inputName] };
+  render() {
+    return(
+      <form noValidate>
+        <strong>Form Data:</strong>
+        <br/>
+        <pre style={{backgroundColor: '#ddd', padding: 10}}>
+          <code>{JSON.stringify(this.props.data, undefined, 2)}</code>
+        </pre>
+        <br/>
+        <strong>Form Meta Data:</strong>
+        <br/>
+        <pre style={{backgroundColor: '#ddd', padding: 10}}>
+          <code>{JSON.stringify(this.props.metadata, undefined, 2)}</code>
+        </pre>
+        {this.props.children}
+      </form>
+    );
+  }
+
+  _getUpdatedFieldMetaData(inputName, value, error=null, hasBlurred=false) {
+    let fieldMetaData = this.props.metadata.fields ? { ...this.props.metadata.fields[inputName] } : {};
     fieldMetaData.currentValue = value;
-    fieldMetaData.pristine = (fieldMetaData.currentValue !== fieldMetaData.initialValue);
+    fieldMetaData.pristine = (fieldMetaData.currentValue === fieldMetaData.initialValue);
     fieldMetaData.dirty = !fieldMetaData.pristine;
     fieldMetaData.error = error;
     fieldMetaData.valid = isBlank(error)
@@ -154,6 +183,16 @@ class Form2 extends Component {
 
   _getFieldMetaData(inputName, metadataField) {
     return this.props.metadata[inputName] ? this.props.metadata[inputName][metadataField] : null;
+  }
+
+  _getBaseErrors(errors={}) {
+    if (isBlank(errors.base)) {
+      return [];
+    } else if (isArray(errors.base)) {
+      return errors.base;
+    } else {
+      return [errors.base];
+    }
   }
 }
 

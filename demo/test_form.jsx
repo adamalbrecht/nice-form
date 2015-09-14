@@ -19,7 +19,8 @@ class TestForm extends Component {
     super(props);
     this.state = {
       formData: {
-        hello: 'world'
+        hello: 'world',
+        foo: null
       },
       formMetadata: {}
     };
@@ -45,13 +46,10 @@ class TestForm extends Component {
   }
 
   handleChange = (updatedFormData, updatedMetadata, action, inputName) => {
-    console.log('form change!', action, inputName);
     this.setState({
       formData: updatedFormData,
       formMetadata: updatedMetadata
     });
-    console.log('New form data:', updatedFormData);
-    console.log('New form meta data:', updatedMetadata);
   }
 
   render() {

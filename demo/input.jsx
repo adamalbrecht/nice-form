@@ -28,7 +28,8 @@ class Input extends Component {
 
   handleChange = (e) => {
     e.preventDefault();
-    this.props.onValueChange(this.refs.input.value);
+    const val = this.refs.input.value.trim();
+    this.props.onValueChange(val.length ? val : null);
   }
 
   render() {
