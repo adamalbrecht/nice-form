@@ -11,12 +11,12 @@ import BasicForm from './basic_form.jsx';
 let form;
 let sandbox;
 
-describe('Form', function() {
+describe('StatelessForm', function() {
   beforeEach(function() {
     sandbox = sinon.sandbox.create();
   });
   afterEach(function() {
-    sandbox.reset();
+    sandbox.restore();
   });
   describe('Given an empty form with the minimum props', function() {
     beforeEach(() => { form = new RenderedTestComponent(<EmptyForm />) });
@@ -28,8 +28,12 @@ describe('Form', function() {
     });
   });
   describe('Given a very basic form with 2 inputs and a button', function() {
+    let handleChangeSpy;
+    let handleValidSubmitSpy;
     beforeEach(function() {
-      form = new RenderedTestComponent(<BasicForm initialData={{hello: 'world'}} />);
+      handleChangeSpy = sinon.spy();
+      handleValidSubmitSpy = sinon.spy();
+      form = new RenderedTestComponent(<BasicForm initialData={{hello: 'world'}} onChange={handleChangeSpy} onValidSubmit={handleValidSubmitSpy} />);
     });
     it('renders the inputs and submit button', function() {
       expect(form.$element.find('input:text').length).to.equal(2);
@@ -39,14 +43,34 @@ describe('Form', function() {
       expect(form.$element.find('input[name=hello]').val()).to.equal('world');
     });
     describe('and the input text is edited', function() {
-      let onChangeSpy;
       beforeEach(function() {
         form.query('input[name=hello]').value = 'moon';
         TestUtils.Simulate.change(form.query('input[name=hello]'));
       });
+      it('calls the onChange callback', function() {
+        expect(handleChangeSpy.called).to.equal(true);
+      });
       it('Updates the property in the data', function() {
         expect(form.$element.find('input[name=hello]').val()).to.equal('moon');
       });
+    });
+    describe('and the form is submitted', function() {
+      beforeEach(function() {
+        form.query('input[name=hello]').value = 'moon';
+        TestUtils.Simulate.change(form.query('input[name=hello]'));
+        TestUtils.Simulate.submit(form.element);
+      });
+      it('calls the onValidSubmit callback', function() {
+        expect(handleValidSubmitSpy.called).to.equal(true);
+      });
+    });
+  });
+  describe('Given a form with 2 fields and a validator function that makes the first input required', function() {
+    let handleInvalidSubmitSpy;
+    beforeEach(function() {
+      handleChangeSpy = sinon.spy();
+      handleValidSubmitSpy = sinon.spy();
+      form = new RenderedTestComponent(<BasicForm initialData={{hello: 'world'}} onChange={handleChangeSpy} onValidSubmit={handleInvalidSubmitSpy} />);
     });
   });
 });

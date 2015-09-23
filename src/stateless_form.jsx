@@ -8,7 +8,7 @@ import {
   applyBlurToFormMetadata
 } from './form_data_reducers';
 
-class Form extends Component {
+class StatelessForm extends Component {
   static propTypes = {
     data: PropTypes.object.isRequired,
     metadata: PropTypes.shape({
@@ -140,4 +140,4 @@ class Form extends Component {
 
 }
 
-export default Form;
+export default StatelessForm;

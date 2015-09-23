@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { Form, initializeFormMetadata } from '..';
+import { StatelessForm, initializeFormMetadata } from '..';
 
 class EmptyForm extends Component {
   constructor(props) {
@@ -19,8 +19,8 @@ class EmptyForm extends Component {
   }
   render() {
     return (
-      <Form data={this.state.formData} metadata={this.state.formMetadata} onChange={this.handleChange} onValidSubmit={this.handleValidSubmit}>
-      </Form>
+      <StatelessForm data={this.state.formData} metadata={this.state.formMetadata} onChange={this.handleChange} onValidSubmit={this.handleValidSubmit}>
+      </StatelessForm>
     );
   }
 }
