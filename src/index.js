@@ -1,9 +1,2 @@
-import StatelessForm from './stateless_form.jsx';
-import wrapInput from './wrap_input.jsx';
-import { initializeFormMetadata } from './form_data_reducers';
-
-export default {
-  StatelessForm: StatelessForm,
-  wrapInput,
-  initializeFormMetadata
-};
+export { StatelessForm, StatefullForm, wrapInput } from './components';
+export { initializeFormMetadata } from './data_operations';

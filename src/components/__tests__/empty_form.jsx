@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { StatelessForm, initializeFormMetadata } from '..';
+import { StatelessForm, initializeFormMetadata } from '../..';
 
 class EmptyForm extends Component {
   constructor(props) {

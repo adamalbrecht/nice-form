@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
-import wrapInput from '../wrap_input.jsx';
-import RenderedTestComponent from './rendered_test_component';
+import { wrapInput } from '../..';
+
+import { RenderedTestComponent } from '../../../test_helpers';
 import { omit, cloneDeep } from 'lodash';
 import TestUtils from 'react-addons-test-utils';
 

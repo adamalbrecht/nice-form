@@ -1,12 +1,11 @@
 import React, { Component, PropTypes } from 'react';
 import { reduce, cloneDeep, some, without, includes, isArray, map, flatten } from 'lodash';
-import FormErrorList from './form_errors.jsx';
-import isBlank from './util/is_blank';
+import { isBlank } from '../util'
 import {
   applyChangeToFormData,
   applyChangeToFormMetadata,
   applyBlurToFormMetadata
-} from './form_data_reducers';
+} from '../data_operations';
 
 class StatelessForm extends Component {
   static propTypes = {
