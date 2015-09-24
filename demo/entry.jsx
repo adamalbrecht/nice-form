@@ -11,14 +11,14 @@ window.TestUtils = TestUtils;
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import TestForm from './test_form.jsx';
+import DemoStatelessForm from './demo_stateless_form.jsx';
 
 class App extends React.Component {
   render() {
     return (
       <div>
         <h3>React 0.14 Form Library Demo</h3>
-        <TestForm />
+        <DemoStatelessForm />
       </div>
     );
   }

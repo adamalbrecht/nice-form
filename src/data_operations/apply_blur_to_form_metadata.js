@@ -3,8 +3,8 @@
  * that was just blurred, update and return the metadata
  * to reflect the fact that it was blurred.
  *
- * @param {metadata} data The form metadata.
- * @param {inputName} string The field that was blurred
+ * @param {object} metadata The form metadata.
+ * @param {string} inputName The field that was blurred
  * @return {object} The updated form metadata
  */
 export default function applyBlurToFormMetadata(metadata, inputName) {

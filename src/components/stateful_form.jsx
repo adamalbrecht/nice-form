@@ -20,8 +20,8 @@ class StatefulForm extends Component {
     };
   }
 
-  handleChange(d, md, a) {
-    this.setState({formData: d, formMetadata: md});
+  handleChange(data, metadata, action) {
+    this.setState({formData: data, formMetadata: metadata});
   }
 
   render() {

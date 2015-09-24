@@ -116,20 +116,7 @@ class StatelessForm extends Component {
 
   render() {
     return(
-      <form noValidate={this.props.noValidate} onSubmit={this.handleSubmit}>
-        <strong>Form Data:</strong>
-        <br/>
-        <pre style={{backgroundColor: '#ddd', padding: 10}}>
-          <code>{JSON.stringify(this.props.data, undefined, 2)}</code>
-        </pre>
-        <br/>
-        <strong>Form Metadata:</strong>
-        <br/>
-        <pre style={{backgroundColor: '#ddd', padding: 10}}>
-          <code>{JSON.stringify(this.props.metadata, undefined, 2)}</code>
-        </pre>
-        {this.props.children}
-      </form>
+      <form noValidate={this.props.noValidate} onSubmit={this.handleSubmit} children={this.props.children} />
     );
   }
 

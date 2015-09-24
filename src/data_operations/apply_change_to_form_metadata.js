@@ -6,8 +6,9 @@ import { some } from 'lodash';
  * that was just changed, update and return the metadata
  * to reflect the change.
  *
- * @param {metadata} data The form metadata.
- * @param {inputName} string The field that was changed
+ * @param {object} metadata The form metadata.
+ * @param {string} inputName The field that was changed
+ * @param {*} newValue The new value of the field
  * @return {object} The updated form metadata
  */
 export default function applyChangeToFormMetadata(currentMetadata, inputName, newValue, errors) {

@@ -1,4 +1,4 @@
-import wrapInput from '../src'
+import { wrapInput } from '../src'
 import React, { Component, PropTypes } from 'react';
 import { shallowEqual } from 'react-pure-render'
 

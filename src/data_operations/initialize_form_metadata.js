@@ -8,6 +8,8 @@ import { reduce } from 'lodash';
  * fields being valid/invalid, dirty/pristine, etc
  *
  * @param {object} data The initial form data. This is most likely your model.
+ * @param {function} validator (optional) The function that validates the form. Should return an object
+ * with fieldnames as keys and error strings as values.
  * @return {object} The form metadata
  */
 export default function initializeFormMetadata(data, validator=null) {

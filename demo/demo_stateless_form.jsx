@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
-import { Form, initializeFormMetadata } from '../src';
-import Input from './input.jsx';
+import { StatelessForm, initializeFormMetadata } from '../src';
+import Input from '../sample_inputs/input.jsx';
 import isBlank from '../src/util/is_blank';
 
 class NestedFieldset extends Component {
@@ -13,7 +13,7 @@ class NestedFieldset extends Component {
   }
 }
 
-class TestForm extends Component {
+class DemoStatelessForm extends Component {
 
   constructor(props) {
     super(props);
@@ -53,7 +53,7 @@ class TestForm extends Component {
 
   render() {
     return (
-      <Form
+      <StatelessForm
         data={this.state.formData}
         metadata={this.state.formMetadata}
         validator={this.validateForm}
@@ -65,9 +65,9 @@ class TestForm extends Component {
         <NestedFieldset />
         <button>Submit!</button>
         
-      </Form>
+      </StatelessForm>
     );
   }
 }
 
-export default TestForm;
+export default DemoStatelessForm;
