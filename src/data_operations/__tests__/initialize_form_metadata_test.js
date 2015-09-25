@@ -7,7 +7,6 @@ describe('initializeFormMetadata', function() {
   describe('Given an object with two fields', function() {
     const formData = { hello: 'world', foo: 'bar' };
     describe('the returned object', function() {
-      let metadata;
       beforeEach(function() {
         metadata = initializeFormMetadata(formData);
       });

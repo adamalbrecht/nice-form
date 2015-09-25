@@ -11,7 +11,7 @@ import { some } from 'lodash';
  * @param {*} newValue The new value of the field
  * @return {object} The updated form metadata
  */
-export default function applyChangeToFormMetadata(currentMetadata, inputName, newValue, errors) {
+export default function applyChangeToFormMetadata(currentMetadata, inputName, newValue) {
   // Run validation
 
   // Update field-level meta data
@@ -19,14 +19,10 @@ export default function applyChangeToFormMetadata(currentMetadata, inputName, ne
   fieldMetadata.currentValue = newValue;
   fieldMetadata.pristine = (fieldMetadata.currentValue === fieldMetadata.initialValue);
   fieldMetadata.dirty = !fieldMetadata.pristine;
-  fieldMetadata.error = errors[inputName];
-  fieldMetadata.valid = isBlank(fieldMetadata.error)
-  fieldMetadata.invalid = !fieldMetadata.valid;
 
   // Initialize form-level meta data with updated field level meta data
   let updatedMetadata = {
     ...currentMetadata,
-    errors: errors,
     fields: {
       ...currentMetadata.fields,
       [inputName]: fieldMetadata
@@ -34,8 +30,6 @@ export default function applyChangeToFormMetadata(currentMetadata, inputName, ne
   };
 
   // Update form-level meta data
-  updatedMetadata.valid = isBlank(errors);
-  updatedMetadata.invalid = !updatedMetadata.valid;
   updatedMetadata.dirty = some(updatedMetadata.fields, f => f.dirty);
   updatedMetadata.pristine = !updatedMetadata.dirty;
 

@@ -4,6 +4,7 @@ import { isBlank } from '../util'
 import {
   applyChangeToFormData,
   applyChangeToFormMetadata,
+  applyErrorsToFormMetadata,
   applyBlurToFormMetadata
 } from '../data_operations';
 
@@ -82,9 +83,12 @@ class StatelessForm extends Component {
   handleChange = (inputName, value) => {
     const updatedData = applyChangeToFormData(this.props.data, inputName, value);
     const errors = this.props.validator(updatedData);
+    const updatedMetadata = applyErrorsToFormMetadata(
+      applyChangeToFormMetadata(this.props.metadata, inputName, value),
+    errors);
     this.props.onChange(
       updatedData,
-      applyChangeToFormMetadata(this.props.metadata, inputName, value, errors),
+      updatedMetadata,
       'input/change',
       inputName
     );
