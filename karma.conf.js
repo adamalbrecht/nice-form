@@ -25,14 +25,10 @@ module.exports = function (config) {
         preLoaders: [
           {
             test: /\.jsx?$/,
-            include: path.resolve('src/__tests__'),
-            loader: 'babel'
-          },
-          {
-            test: /\.jsx?$/,
             include: path.resolve('src/'),
             exclude: [
-              path.resolve('src/__tests__'),
+              path.resolve('src/components/__tests__'),
+              path.resolve('src/data_operations/__tests__'),
               path.resolve('src/util/__tests__')
             ],
             loader: 'isparta'
