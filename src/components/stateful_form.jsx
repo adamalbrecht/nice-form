@@ -7,6 +7,7 @@ import { cloneDeep } from 'lodash';
 class StatefulForm extends Component {
   static propTypes = {
     initialData: PropTypes.object.isRequired,
+    onChange: PropTypes.func,
     onInvalidSubmit: PropTypes.func,
     onValidSubmit: PropTypes.func.isRequired
   };
@@ -22,6 +23,9 @@ class StatefulForm extends Component {
 
   handleChange(data, metadata, action) {
     this.setState({formData: data, formMetadata: metadata});
+    if (this.props.onChange) {
+      this.props.onChange(data, metadata, action);
+    }
   }
 
   render() {
