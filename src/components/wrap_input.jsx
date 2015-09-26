@@ -1,6 +1,17 @@
 import React, { Component, PropTypes } from 'react';
 import { shallowEqual } from 'react-pure-render'
 
+const defaultFieldMetadata = {
+  valid: true,
+  invalid: false,
+  pristine: true,
+  dirty: false,
+  error: null,
+  initialValue: null,
+  currentValue: null,
+  hasBlurred: false
+};
+
 export default function wrapInput(InputComponent) {
 
   class FormInput extends Component {
@@ -9,27 +20,17 @@ export default function wrapInput(InputComponent) {
     }
 
     static contextTypes = {
-      handleInputChange: PropTypes.func.isRequired,
-      getFieldValue: PropTypes.func.isRequired,
-      formIsValid: PropTypes.func.isRequired,
-      formIsInvalid: PropTypes.func.isRequired,
-      formIsPristine: PropTypes.func.isRequired,
-      formIsDirty: PropTypes.func.isRequired,
-      formHasBeenSubmitted: PropTypes.func.isRequired,
-      getFieldError: PropTypes.func.isRequired,
-      fieldIsValid: PropTypes.func.isRequired,
-      fieldIsInvalid: PropTypes.func.isRequired,
-      fieldIsDirty: PropTypes.func.isRequired,
-      fieldIsPristine: PropTypes.func.isRequired,
+      getFormData: PropTypes.func.isRequired,
+      getFormMetadata: PropTypes.func.isRequired,
       handleInputBlur: PropTypes.func.isRequired,
-      fieldHasBlurred: PropTypes.func.isRequired
+      handleInputChange: PropTypes.func.isRequired
     }
 
     shouldComponentUpdate(nextProps, nextState, nextContext) {
       return !shallowEqual(this.props, nextProps) ||
              !shallowEqual(this.state, nextState) ||
              !shallowEqual(this.context, nextContext) ||
-             this.context.getFieldValue(this.props.name) !== this.getFieldValue(this.props.name)
+             this.context.getFormMetadata()[this.props.name] !== this.getFieldValue(this.props.name)
     }
 
     handleValueChange = (newVal) => {
@@ -50,23 +51,27 @@ export default function wrapInput(InputComponent) {
     }
 
     render() {
+      const name = this.props.name;
+      const data = this.context.getFormData();
+      const metadata = this.context.getFormMetadata();
+      const fieldMetadata = metadata.fields[name] || defaultFieldMetadata;
       return (
         <InputComponent
           {...this.props}
-          value={this.context.getFieldValue(this.props.name)}
+          value={data[name]}
           onValueChange={this.handleValueChange}
-          valid={this.context.fieldIsValid(this.props.name)}
-          invalid={!this.context.fieldIsValid(this.props.name)}
-          pristine={this.context.fieldIsPristine(this.props.name)}
-          dirty={!this.context.fieldIsPristine(this.props.name)}
-          error={this.context.getFieldError(this.props.name)}
+          valid={fieldMetadata.valid}
+          invalid={fieldMetadata.invalid}
+          pristine={fieldMetadata.pristine}
+          dirty={fieldMetadata.dirty}
+          error={fieldMetadata.error}
           onBlur={this.handleBlur}
-          hasBlurred={this.context.fieldHasBlurred(this.props.name)}
-          formHasBeenSubmitted={this.context.formHasBeenSubmitted()}
-          formIsValid={this.context.formIsValid()}
-          formIsInvalid={!this.context.formIsValid()}
-          formIsPristine={this.context.formIsPristine()}
-          formIsDirty={!this.context.formIsPristine()} />
+          hasBlurred={fieldMetadata.hasBlurred}
+          formHasBeenSubmitted={metadata.formHasBeenSubmitted}
+          formIsValid={metadata.valid}
+          formIsInvalid={metadata.invalid}
+          formIsPristine={metadata.pristine}
+          formIsDirty={metadata.dirty} />
       );
     }
   }

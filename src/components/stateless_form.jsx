@@ -35,21 +35,10 @@ class StatelessForm extends Component {
   }
 
   static childContextTypes = {
-    handleInputChange: PropTypes.func,
-    formIsValid: PropTypes.func,
-    formIsInvalid: PropTypes.func,
-    formIsPristine: PropTypes.func,
-    formIsDirty: PropTypes.func,
-    formHasBeenSubmitted: PropTypes.func,
-    getBaseErrors: PropTypes.func,
-    getFieldValue: PropTypes.func,
-    getFieldError: PropTypes.func,
-    fieldIsValid: PropTypes.func,
-    fieldIsInvalid: PropTypes.func,
-    fieldIsPristine: PropTypes.func,
-    fieldIsDirty: PropTypes.func,
+    getFormData: PropTypes.func,
+    getFormMetadata: PropTypes.func,
     handleInputBlur: PropTypes.func,
-    fieldHasBlurred: PropTypes.func
+    handleInputChange: PropTypes.func
   };
 
   static defaultProps = {
@@ -63,20 +52,10 @@ class StatelessForm extends Component {
 
   getChildContext() {
     return {
-      handleInputChange: this.handleChange,
-      formIsValid: () => this.props.metadata.valid || true,
-      formIsInvalid: () => this.props.metadata.invalid || false,
-      formIsPristine: () => this.props.metadata.pristine || true,
-      formIsDirty: () => this.props.metadata.dirty || false,
-      formHasBeenSubmitted: () => this.props.metadata.formHasBeenSubmitted || false,
-      getFieldValue: (name) => this.props.data[name],
-      getFieldError: (name) => this._getFieldMetadata(name, 'error') || null,
-      fieldIsValid: (name) => this._getFieldMetadata(name, 'valid') || true,
-      fieldIsInvalid: (name) => this._getFieldMetadata(name, 'invalid') || false,
-      fieldIsPristine: (name) => this._getFieldMetadata(name, 'pristine') || true,
-      fieldIsDirty: (name) => this._getFieldMetadata(name, 'dirty') || false,
+      getFormData: () => this.props.data,
+      getFormMetadata: () => this.props.metadata,
       handleInputBlur: (name) => this.handleInputBlur(name),
-      fieldHasBlurred: (name) => this._getFieldMetadata(name, 'hasBlurred') || false
+      handleInputChange: this.handleChange
     }
   }
 
