@@ -1,5 +1,5 @@
 import { isBlank } from '../util';
-import { some } from 'lodash';
+import { some, isBoolean } from 'lodash';
 
 /**
  * Given the existing metadata and the name of an input
@@ -12,13 +12,12 @@ import { some } from 'lodash';
  * @return {object} The updated form metadata
  */
 export default function applyChangeToFormMetadata(currentMetadata, inputName, newValue) {
-  // Run validation
-
   // Update field-level meta data
   let fieldMetadata = currentMetadata.fields ? { ...currentMetadata.fields[inputName] } : {};
   fieldMetadata.currentValue = newValue;
   fieldMetadata.pristine = (fieldMetadata.currentValue === fieldMetadata.initialValue);
   fieldMetadata.dirty = !fieldMetadata.pristine;
+  fieldMetadata.hasBlurred = isBoolean(fieldMetadata.hasBlurred) ? fieldMetadata.hasBlurred : false;
 
   // Initialize form-level meta data with updated field level meta data
   let updatedMetadata = {
