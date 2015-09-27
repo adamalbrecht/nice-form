@@ -1,3 +1,4 @@
+import initializeFieldMetadata from './initialize_field_metadata';
 /**
  * Given the existing metadata and the name of an input
  * that was just blurred, update and return the metadata
@@ -8,7 +9,7 @@
  * @return {object} The updated form metadata
  */
 export default function applyBlurToFormMetadata(metadata, inputName) {
-  let updatedFieldMetadata = metadata.fields ? { ...metadata.fields[inputName] } : {};
+  let updatedFieldMetadata = (metadata.fields && metadata.fields[inputName]) ? metadata.fields[inputName] : initializeFieldMetadata();
   updatedFieldMetadata.hasBlurred = true;
   return { ...metadata, fields: { ...metadata.fields, [inputName]: updatedFieldMetadata } };
 }

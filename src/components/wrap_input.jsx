@@ -1,16 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { shallowEqual } from 'react-pure-render'
-
-const defaultFieldMetadata = {
-  valid: true,
-  invalid: false,
-  pristine: true,
-  dirty: false,
-  error: null,
-  initialValue: null,
-  currentValue: null,
-  hasBlurred: false
-};
+import { isEmpty } from 'lodash';
+import { initializeFieldMetadata } from '../data_operations';
 
 export default function wrapInput(InputComponent) {
 
@@ -55,7 +46,10 @@ export default function wrapInput(InputComponent) {
       const name = this.props.name;
       const data = this.context.formData;
       const metadata = this.context.formMetadata;
-      const fieldMetadata = metadata.fields[name] || defaultFieldMetadata;
+      if (metadata.fields[name] && isEmpty(metadata.fields[name])) {
+
+      }
+      const fieldMetadata = metadata.fields[name] || initializeFieldMetadata();
       return (
         <InputComponent
           {...this.props}

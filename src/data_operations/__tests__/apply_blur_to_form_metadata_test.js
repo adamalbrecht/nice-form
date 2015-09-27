@@ -29,6 +29,11 @@ describe('applyBlurToFormMetadata', function() {
       it('adds the non-existent field to the metadata', function() {
         expect(updatedMetadata.fields.bad.hasBlurred).to.equal( true);
       });
+      it('initializes the rest of the field metadata', function() {
+        expect(updatedMetadata.fields.bad.valid).to.equal(true);
+        expect(updatedMetadata.fields.bad.pristine).to.equal(true);
+        expect(updatedMetadata.fields.bad.error).to.equal(null);
+      });
     });
   });
 });

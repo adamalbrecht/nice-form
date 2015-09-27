@@ -1,5 +1,6 @@
 import { isBlank, areErrorsPresent } from '../util';
 import { reduce } from 'lodash';
+import initializeFieldMetadata from './initialize_field_metadata';
 
 /**
  * Given a JSON object representing the initial data that
@@ -15,16 +16,12 @@ import { reduce } from 'lodash';
 export default function initializeFormMetadata(data, validator=null) {
   const errors = validator ? validator(data) : {};
   const initialFieldMetadata = reduce(data, (result, value, name) => {
-    result[name] = {
+    result[name] = initializeFieldMetadata(value, {
       error: errors[name],
       valid: isBlank(errors[name]),
       invalid: !isBlank(errors[name]),
-      pristine: true,
-      dirty: false,
-      hasBlurred: false,
-      initialValue: value,
-      currentValue: value
-    };
+      initialValue: value
+    });
     return result;
   }, {});
 
