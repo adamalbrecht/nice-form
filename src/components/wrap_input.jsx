@@ -20,17 +20,18 @@ export default function wrapInput(InputComponent) {
     }
 
     static contextTypes = {
-      getFormData: PropTypes.func.isRequired,
-      getFormMetadata: PropTypes.func.isRequired,
+      formData: PropTypes.object.isRequired,
+      formMetadata: PropTypes.object.isRequired,
       handleInputBlur: PropTypes.func.isRequired,
       handleInputChange: PropTypes.func.isRequired
     }
 
     shouldComponentUpdate(nextProps, nextState, nextContext) {
+      const prevFieldMetadata = this.context.formMetadata.fields ? this.context.formMetadata.fields[this.props.name] : null;
+      const nextFieldMetadata = nextContext.formMetadata.fields ? nextContext.formMetadata.fields[this.props.name] : null;
       return !shallowEqual(this.props, nextProps) ||
              !shallowEqual(this.state, nextState) ||
-             !shallowEqual(this.context, nextContext) ||
-             this.context.getFormMetadata()[this.props.name] !== this.getFieldValue(this.props.name)
+             !shallowEqual(prevFieldMetadata, nextFieldMetadata);
     }
 
     handleValueChange = (newVal) => {
@@ -52,8 +53,8 @@ export default function wrapInput(InputComponent) {
 
     render() {
       const name = this.props.name;
-      const data = this.context.getFormData();
-      const metadata = this.context.getFormMetadata();
+      const data = this.context.formData;
+      const metadata = this.context.formMetadata;
       const fieldMetadata = metadata.fields[name] || defaultFieldMetadata;
       return (
         <InputComponent

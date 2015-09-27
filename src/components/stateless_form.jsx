@@ -35,8 +35,8 @@ class StatelessForm extends Component {
   }
 
   static childContextTypes = {
-    getFormData: PropTypes.func,
-    getFormMetadata: PropTypes.func,
+    formData: PropTypes.object,
+    formMetadata: PropTypes.object,
     handleInputBlur: PropTypes.func,
     handleInputChange: PropTypes.func
   };
@@ -52,8 +52,8 @@ class StatelessForm extends Component {
 
   getChildContext() {
     return {
-      getFormData: () => this.props.data,
-      getFormMetadata: () => this.props.metadata,
+      formData: this.props.data,
+      formMetadata: this.props.metadata,
       handleInputBlur: (name) => this.handleInputBlur(name),
       handleInputChange: this.handleChange
     }

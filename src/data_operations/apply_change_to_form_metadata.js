@@ -14,6 +14,9 @@ import { some, isBoolean } from 'lodash';
 export default function applyChangeToFormMetadata(currentMetadata, inputName, newValue) {
   // Update field-level meta data
   let fieldMetadata = currentMetadata.fields ? { ...currentMetadata.fields[inputName] } : {};
+  if (fieldMetadata.initialValue === undefined) {
+    fieldMetadata.initialValue = null;
+  }
   fieldMetadata.currentValue = newValue;
   fieldMetadata.pristine = (fieldMetadata.currentValue === fieldMetadata.initialValue);
   fieldMetadata.dirty = !fieldMetadata.pristine;
