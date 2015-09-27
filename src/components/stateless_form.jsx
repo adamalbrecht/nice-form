@@ -103,10 +103,6 @@ class StatelessForm extends Component {
     );
   }
 
-  _getFieldMetadata(inputName, metadataField) {
-    return (this.props.metadata.fields && this.props.metadata.fields[inputName]) ? this.props.metadata.fields[inputName][metadataField] : null;
-  }
-
 }
 
 export default StatelessForm;
