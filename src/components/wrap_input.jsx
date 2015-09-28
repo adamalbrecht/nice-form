@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { shallowEqual } from 'react-pure-render'
-import { isEmpty } from 'lodash';
+import { isEmpty, isEqual } from 'lodash';
 import { initializeFieldMetadata } from '../data_operations';
 
 export default function wrapInput(InputComponent) {
@@ -22,7 +22,8 @@ export default function wrapInput(InputComponent) {
       const nextFieldMetadata = nextContext.formMetadata.fields ? nextContext.formMetadata.fields[this.props.name] : null;
       return !shallowEqual(this.props, nextProps) ||
              !shallowEqual(this.state, nextState) ||
-             !shallowEqual(prevFieldMetadata, nextFieldMetadata);
+             !shallowEqual(this.context.formMetadata, nextContext.formMetadata) ||
+             !isEqual(prevFieldMetadata, nextFieldMetadata);
     }
 
     handleValueChange = (newVal) => {

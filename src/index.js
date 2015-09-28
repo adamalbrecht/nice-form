@@ -1,2 +1,2 @@
-export { StatelessForm, StatefullForm, wrapInput } from './components';
+export { StatelessForm, StatefullForm, wrapInput, wrapFormHelper } from './components';
 export { initializeFormMetadata } from './data_operations';

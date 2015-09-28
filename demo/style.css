@@ -1,3 +1,39 @@
 .Field-errorMessage {
   color: red;
 }
+
+.FormDataViewer {
+  font-size: 11px;
+  clear: both;
+  overflow: auto;
+  zoom: 1;
+}
+
+.FormDataViewer-codeBlock {
+  display: inline-block;
+  float: left;
+}
+
+.FormDataViewer-codeBlock pre {
+  background-color: #ddd;
+  padding: 10px;
+  border: solid 1px #999;
+  margin: 0 15px 0 0;
+}
+
+.ErrorMessageList {
+  background-color: #f2dede;
+  color: #a94442;
+  border: solid 1px #ebccd1;
+  padding: 5px;
+  margin: 5px 0;
+  border-radius: 5px;
+}
+.ErrorMessageList-title {
+  padding: 0;
+  margin: 0 0 5px;
+}
+.ErrorMessageList ul {
+  margin: 0;
+  padding-top: 0;
+}

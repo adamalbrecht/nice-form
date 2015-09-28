@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { StatelessForm } from './stateless_form.jsx';
+import StatelessForm from './stateless_form.jsx';
 import { initializeFormMetadata } from '../data_operations';
 
 import { cloneDeep } from 'lodash';
@@ -34,7 +34,7 @@ class StatefulForm extends Component {
         data={this.state.formData}
         metadata={this.state.formMetadata}
         onChange={this.handleChange.bind(this)}
-        onValidSubmit={this.props.handleValidSubmit}
+        onValidSubmit={this.props.onValidSubmit}
         onInvalidSubmit={this.props.onInvalidSubmit}
         children={this.props.children} />
     );
