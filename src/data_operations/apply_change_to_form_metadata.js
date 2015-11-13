@@ -1,5 +1,6 @@
 import { isBlank } from '../util';
-import { some, isBoolean } from 'lodash';
+import some from 'lodash/collection/some';
+import isBoolean from 'lodash/lang/isBoolean';
 
 /**
  * Given the existing metadata and the name of an input

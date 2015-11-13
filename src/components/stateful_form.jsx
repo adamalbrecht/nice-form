@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import StatelessForm from './stateless_form.jsx';
 import { initializeFormMetadata } from '../data_operations';
 
-import { cloneDeep } from 'lodash';
+import cloneDeep from 'lodash/lang/cloneDeep';
 
 class StatefulForm extends Component {
   static propTypes = {

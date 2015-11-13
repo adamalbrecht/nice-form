@@ -1,4 +1,4 @@
-import { merge } from 'lodash'
+import merge from 'lodash/object/merge';
 /**
  *
  * @param {*} value The value of the field

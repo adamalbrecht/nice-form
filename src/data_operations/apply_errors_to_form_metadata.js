@@ -1,4 +1,4 @@
-import { mapValues } from 'lodash';
+import mapValues from 'lodash/object/mapValues';
 import { areErrorsPresent, isBlank } from '../util';
 
 /**

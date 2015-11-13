@@ -1,6 +1,13 @@
 import React, { Component, PropTypes } from 'react';
-import { reduce, cloneDeep, some, without, includes, isArray, map, flatten } from 'lodash';
+
+import without from 'lodash/array/without';
+import map from 'lodash/collection/map';
+import reduce from 'lodash/collection/reduce';
+import some from 'lodash/collection/some';
+import isArray from 'lodash/lang/isArray';
+
 import { isBlank } from '../util'
+
 import {
   applyChangeToFormData,
   applyChangeToFormMetadata,

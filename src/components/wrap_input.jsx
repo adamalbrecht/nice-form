@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
-import { shallowEqual } from 'react-pure-render'
-import { isEmpty, isEqual } from 'lodash';
+import shallowEqual from 'react-pure-render/shallowEqual';
+import isEmpty from 'lodash/lang/isEmpty';
+import isEqual from 'lodash/lang/isEqual';
 import { initializeFieldMetadata } from '../data_operations';
 
 export default function wrapInput(InputComponent) {

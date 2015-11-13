@@ -161,15 +161,15 @@ import React from 'react';
 import { wrapFormHelper } from 'nice-form';
 import { isEmpty, map } from 'lodash';
 
+// using new function react component syntax
 function ErrorMessageList({data, metadata}) {
-  return(
-    if  (metadata && metadata.formHasBeenSubmitted && !isEmpty(metadata.errors)) {
-      return (
-        <ul className='ErrorMessageList'>
-          { map(metadata.errors, (errMsg, errKey) => <li key={errKey}>{`${errKey} ${errMsg}`}</li>) }
-        </ul>
-      );
-  );
+  if  (metadata && metadata.formHasBeenSubmitted && !isEmpty(metadata.errors)) {
+    return (
+      <ul className='ErrorMessageList'>
+        { map(metadata.errors, (errMsg, errKey) => <li key={errKey}>{`${errKey} ${errMsg}`}</li>) }
+      </ul>
+    );
+  }
 }
 
 export default wrapFormHelper(ErrorMessageList);

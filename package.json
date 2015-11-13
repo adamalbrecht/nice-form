@@ -6,11 +6,13 @@
     "type": "git",
     "url": "https://github.com/adamalbrecht/nice-form.git"
   },
-  "main": "src/index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "demo": "node server.js",
+    "prebuild": "rm -rf dist && mkdir dist",
+    "build": "./node_modules/.bin/webpack --config webpack.production.config.js",
     "test": "node ./node_modules/karma/bin/karma start --single-run",
-    "autotest": "node ./node_modules/karma/bin/karma start --no-single-run"
+    "autotest": "node ./node_modules/karma/bin/karma start --no-single-run",
+    "demo": "node server.js"
   },
   "author": "Adam Albrecht",
   "license": "MIT",
@@ -21,15 +23,12 @@
     "validation",
     "react-component"
   ],
-  "dependencies": {
-    "lodash": "^3.10.1",
-    "react-pure-render": "^1.0.2"
-  },
   "peerDependencies": {
-    "react": "^0.14.0-rc1",
-    "react-dom": "^0.14.0-rc1"
+    "react": "^0.14.2",
+    "react-dom": "^0.14.2"
   },
   "devDependencies": {
+    "lodash": "^3.10.1",
     "babel-core": "^5.8.23",
     "babel-eslint": "^4.1.1",
     "babel-loader": "^5.3.2",
@@ -60,6 +59,7 @@
     "normalize.css": "^3.0.3",
     "phantomjs": "^1.9.18",
     "react-addons-test-utils": "^0.14.0-rc1",
+    "react-pure-render": "^1.0.2",
     "style-loader": "^0.12.3",
     "webpack": "^1.12.1",
     "webpack-dev-server": "^1.10.1",

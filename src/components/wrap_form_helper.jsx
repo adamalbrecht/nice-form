@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
-import { shallowEqual } from 'react-pure-render'
-import { isEqual } from 'lodash';
+import shallowEqual from 'react-pure-render/shallowEqual'
+import isEqual from 'lodash/lang/isEqual';
 
 /*
  * This higher order component is used for any

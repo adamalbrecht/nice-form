@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { StatelessForm, initializeFormMetadata } from '../src';
+import { StatelessForm as Form, initializeFormMetadata } from '../src';
 import Input from '../sample_inputs/input.jsx';
 import FormDataViewer from '../sample_inputs/form_data_viewer.jsx';
 import ErrorMessageList from '../sample_inputs/error_message_list.jsx';
@@ -63,22 +63,24 @@ class DemoStatelessForm extends Component {
 
   render() {
     return (
-      <StatelessForm
-        data={this.state.formData}
-        metadata={this.state.formMetadata}
-        validator={this.validateForm}
-        onChange={this.handleChange}
-        onValidSubmit={this.handleValidSubmit}
-        onInvalidSubmit={this.handleInvalidSubmit} >
+      <div>
+        <Form
+          data={this.state.formData}
+          metadata={this.state.formMetadata}
+          validator={this.validateForm}
+          onChange={this.handleChange}
+          onValidSubmit={this.handleValidSubmit}
+          onInvalidSubmit={this.handleInvalidSubmit} >
 
-        { this.state.showDataViewer ? <FormDataViewer /> : null }
-        { !this.state.showDataViewer ? <a href='#' style={{display: 'block', margin: '5px 0 10px', fontSize: 11, fontStyle: 'italic'}} onClick={this.showDataViewer}>Show Form Data & MetaData</a> : null }
-        <ErrorMessageList />
-        <Input type='text' label='Hello' name='hello' />
-        <NestedFieldset />
-        <button>Submit!</button>
+          { this.state.showDataViewer ? <FormDataViewer /> : null }
+          { !this.state.showDataViewer ? <a href='#' style={{display: 'block', margin: '5px 0 10px', fontSize: 11, fontStyle: 'italic'}} onClick={this.showDataViewer}>Show Form Data & MetaData</a> : null }
+          <ErrorMessageList />
+          <Input type='text' label='Hello' name='hello' />
+          <NestedFieldset />
+          <button>Submit!</button>
+        </Form>
         { this.renderResults() }
-      </StatelessForm>
+      </div>
     );
   }
 

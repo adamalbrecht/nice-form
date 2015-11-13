@@ -1,4 +1,5 @@
-import { isEmpty, isNaN } from 'lodash';
+import isEmpty from 'lodash/lang/isEmpty';
+import isNaN from 'lodash/lang/isNaN';
 
 export default function isBlank(obj) {
   switch (typeof obj) {

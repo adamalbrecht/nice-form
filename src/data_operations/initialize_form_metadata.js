@@ -1,5 +1,5 @@
 import { isBlank, areErrorsPresent } from '../util';
-import { reduce } from 'lodash';
+import reduce from 'lodash/collection/reduce';
 import initializeFieldMetadata from './initialize_field_metadata';
 
 /**

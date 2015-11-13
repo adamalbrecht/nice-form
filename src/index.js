@@ -1,2 +1,10 @@
-export { StatelessForm, StatefullForm, wrapInput, wrapFormHelper } from './components';
-export { initializeFormMetadata } from './data_operations';
+import { StatelessForm, StatefulForm, wrapInput, wrapFormHelper } from './components';
+import { initializeFormMetadata } from './data_operations';
+
+export default {
+  StatelessForm,
+  StatefulForm,
+  wrapInput,
+  wrapFormHelper,
+  initializeFormMetadata
+};
