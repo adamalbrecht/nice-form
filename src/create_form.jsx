@@ -62,7 +62,7 @@ export default function createForm(validator, initialData={}) {
           name: inputName,
           onChange: (val) => this.handleChange(inputName, val),
           onBlur: () => this.handleBlur(inputName),
-          value: this.state.formData[inputName] || null,
+          value: (this.state.formData[inputName] == null) ? '' : this.state.formData[inputName],
           valid: (fmd.valid !== null) ? fmd.valid : true,
           pristine: (fmd.valid !== null) ? fmd.pristine : true,
           error: fmd.error,
