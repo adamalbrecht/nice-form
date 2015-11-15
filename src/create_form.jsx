@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React from 'react';
+import hoistStatics from 'hoist-non-react-statics';
 import {
   applyChangeToFormData,
   applyChangeToFormMetadata,
@@ -8,8 +9,8 @@ import {
 } from './data_operations';
 
 export default function createForm(validator, initialData={}) {
-  return function(ComposedComponent) {
-    class FormComponent extends Component {
+  return function(WrappedComponent) {
+    class FormComponent extends React.Component {
       constructor(props) {
         super(props);
         this.state = {
@@ -80,7 +81,7 @@ export default function createForm(validator, initialData={}) {
 
       render() {
         return (
-          <ComposedComponent
+          <WrappedComponent
             {...this.props}
             resetFormData={this.resetFormData}
             formData={this.state.formData}
@@ -91,7 +92,6 @@ export default function createForm(validator, initialData={}) {
         );
       }
     }
-
-    return FormComponent;
+    return hoistStatics(FormComponent, WrappedComponent);
   };
 }
