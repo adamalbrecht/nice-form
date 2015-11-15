@@ -1,4 +1,4 @@
-# React Form Helper
+# React Form Helper (WIP)
 
 React Form Helper is a small form building library for React.js that helps to remove boilerplate and make it easy to validate your forms. It is inspired by [Redux-Form](https://github.com/erikras/redux-form), [Formsy-React](https://github.com/christianalfoni/formsy-react), and [Angular](https://angularjs.org/) 1.x forms.
 
