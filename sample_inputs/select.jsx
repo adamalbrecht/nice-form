@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 
-class Input extends Component {
+class Select extends Component {
   static propTypes = {
     error: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
     formHasBeenSubmitted: PropTypes.bool.isRequired,
@@ -14,24 +14,22 @@ class Input extends Component {
     value: PropTypes.any
   };
 
-  static defaultProps = {
-    type: 'text'
-  };
-
   handleChange = (e) => {
     e.preventDefault();
     const val = this.refs.input.value;
     this.props.onChange(val.length ? val : null);
   }
-  
+
   render() {
     return (
       <div className='Field'>
         <label>{this.props.label}</label>
-        <input
+        <select
           ref='input'
           onChange={this.handleChange}
-          {...this.props} />
+          { ...this.props }>
+          { this.props.children }
+        </select>
         { this._showErrorMessage() ? <span className='Field-errorMessage'>{this.props.error}</span> : null }
       </div>
     );
@@ -42,4 +40,4 @@ class Input extends Component {
   }
 }
 
-export default Input;
+export default Select;

@@ -1,10 +1,19 @@
-import { StatelessForm, StatefulForm, wrapInput, wrapFormHelper } from './components';
-import { initializeFormMetadata } from './data_operations';
+import createForm from './create_form.jsx';
+import {
+  initializeFormMetadata,
+  initializeFieldMetadata,
+  applyErrorsToFormMetadata,
+  applyChangeToFormData,
+  applyChangeToFormMetadata,
+  applyBlurToFormMetadata
+} from './data_operations';
 
 export default {
-  StatelessForm,
-  StatefulForm,
-  wrapInput,
-  wrapFormHelper,
-  initializeFormMetadata
+  createForm,
+  initializeFormMetadata,
+  initializeFieldMetadata,
+  applyErrorsToFormMetadata,
+  applyChangeToFormData,
+  applyChangeToFormMetadata,
+  applyBlurToFormMetadata
 };

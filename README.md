@@ -1,6 +1,6 @@
-# Nice Form: Dead Simple Form Builder for React 0.14+ (WIP)
+# React Form Helper
 
-Nice Form is a form builder for React.js with a dead-simple API. It is inspired by [Redux-Form](https://github.com/erikras/redux-form), [Formsy-React](https://github.com/christianalfoni/formsy-react), and [Angular](https://angularjs.org/) 1.x forms.
+React Form Helper is a small form building library for React.js that helps to remove boilerplate and make it easy to validate your forms. It is inspired by [Redux-Form](https://github.com/erikras/redux-form), [Formsy-React](https://github.com/christianalfoni/formsy-react), and [Angular](https://angularjs.org/) 1.x forms.
 
 ## Status:
 
@@ -8,12 +8,10 @@ This library is still a work in progress and **not** ready for production use.
 
 ## Features:
 
-* Does not provide any input components - you must write your own. You can see some samples in the `sample_inputs` directory.
+* Does not provide any input components - you can use standard form fields or write your own more complex inputs. You can see some samples in the `sample_inputs` directory. They must, at a minimum, accept props for `value` and `onChange`. But quite a few more props are provided.
 * Splits all state into 2 objects: Data and metadata. The data is what the result of your form will be, while metadata includes information on validity, dirtyness, initial values, etc.
-* Ability to choose between maintaing the state yourself or letting the form maintain it. This is similar to how react inputs can be "controlled" or "uncontrolled". If you choose to maintain the state yourself, it is easy to store your form data in a Flux store.
-* Set the value and change handler of your input by just setting the `name` property
+* While you can certainly maintain the form state yourself by piecing together the provided functions, the easiest way is to use the provided `createForm` higher order component.
 * Validate the form with a single function that returns an object of errors.
-* Inputs don't have to be direct children of the form - they can be deeply nested in child components.
 
 ## Coming Soon:
 
@@ -26,168 +24,113 @@ This library is still a work in progress and **not** ready for production use.
 
 ### Creating Inputs:
 
-Inputs can be as simple or as complex as you'd like, but they must, at the minimum, accept props for `value` and `onChange` and then you need to wrap them using Nice Form's `wrapInput` higher order component function. Here is a simple example:
+Inputs can be as simple or as complex as you'd like, but they must, at the minimum, accept props for `value` and `onChange`. While you can use basic form elements like `<input />` or `<select />`, you'll miss out on some of the nice metadata that is provided, such as error messages, dirty, status, etc.
 
 ```javascript
-import React from 'react';
-import { wrapInput } from 'nice-form';
+import React, { Component, PropTypes } from 'react';
 
 class Input extends React.Component {
-  handleChange = (e) => {
-    e.preventDefault();
-    this.props.onValueChange(this.refs.input.value);
+  static propTypes = {
+    error: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
+    formHasBeenSubmitted: PropTypes.bool.isRequired,
+    hasBlurred: PropTypes.bool.isRequired,
+    label: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    onBlur: PropTypes.func.isRequired,
+    onChange: PropTypes.func.isRequired,
+    type: PropTypes.oneOf(['text', 'number', 'date', 'datetime-local']),
+    valid: PropTypes.bool.isRequired,
+    value: PropTypes.any
   }
   render() {
     return (
       <div className='Field'>
         { this.props.label ? <label for={this.props.name}>{this.props.label}</label> : null }
         <input ref='input' onChange={this.handleChange} {...this.props} />
+        { !this.props.valid && <span className='error'>{this.props.error}</span> }
       </div>
     );
   }
 }
 
-export default wrapInput(Input);
+export default Input;
 ```
 
 This example is extremely simple, but you can do quite a bit more since you have access to all form data and metadata. See the `sample_inputs` directory for more complex samples. You will have a number of props at your disposal when creating your inputs. You can see a list of them [here](doc/input_props.md).
 
 ### Simple Example:
 
-In this example, we'll let the form maintain state for us by importing the `StatefulForm` component. We just need to provide initial data and a function to handle submission.
+In this example, we create our form using the ES2016 decorator syntax. If your project does not support this, then you can wrap it like so: `createForm(UserProfilePage)(validator, initialData);`.
 
 ```javascript
-import React from 'react';
-import { StatefulForm as Form } from 'nice-form';
+import React, { Component, PropTypes } from 'react';
+import { createForm } from 'react-form-helper';
 import { Input, Textarea } from '../my_form_inputs';
 
-class UserProfilePage extends React.Component {
-  handleSubmit = (data) => {
-    // ...
+function validator(data) {
+  let errors = {};
+  if (!data.username || !data.username.length) {
+    errors.username = 'is required';
   }
-
-  validate = (data) => {
-    let errors = {};
-    if (!data.username || !data.username.length) {
-      errors.username = 'is required';
-    }
-    if (!data.password || !data.password.length) {
-      errors.password = 'is required';
-    } else if (data.password !== data.password_confirmation) {
-      errors.password_confirmation = 'must match password';
-    }
-    return errors;
+  if (!data.password || !data.password.length) {
+    errors.password = 'is required';
+  } else if (data.password !== data.password_confirmation) {
+    errors.password_confirmation = 'must match password';
   }
-
-  render() {
-    return (
-      <Form initialData={this.props.user} validator={this.validate} onValidSubmit={this.handleSubmit}>
-        <Input type='text' name='username' label='Username' />
-        <Input type='text' name='password' label='Password' />
-        <Input type='text' name='password_confirmation' label='Password Confirmation' />
-        <Textarea name='biography' label='Biography' />
-        <button>Submit</button>
-      </Form>
-    );
-  }
+  return errors;
 }
-```
 
-
-### Maintain State in Parent Component:
-
-Next, we'll take our example above and give ourselves more fine-grained control by maintaining the state in our parent component. Note that we're importing `StatelessForm` this time, as well as the `initializeFormMetadata` function. We'll also need to setup our initial state in the constructor, add a change handler function, and change some of the form's props.
-
-```javascript
-import React from 'react';
-import { StatelessForm as Form, initializeFormMetadata } from 'nice-form';
-import { Input, Textarea } from '../my_form_inputs';
-
+@createForm(validator, { /*... initial data - optional ... */ });
 class UserProfilePage extends React.Component {
-  constructor(props) {
-    super(props);
-    const formData = { username: props.user.username, biography: props.user.biography };
-    this.state = {
-      data: formData,
-      metadata: initializeFormMetadata(formData, this.validate)
-    };
+  static propTypes = {
+    formData: PropTypes.object.isRequired,
+    formMetadata: PropTypes.object.isRequired,
+    getFieldProps: PropTypes.func.isRequired,
+    markFormAsSubmitted: PropTypes.func.isRequired,
+    resetFormData: PropTypes.func.isRequired
   }
 
   handleSubmit = (data) => {
-    // ...
-  }
-  validate = (data) => {
-    // same as above example...
-  }
-
-  handleChange = (data, metadata, action) => {
-    this.setState({data: data, metadata: metadata});
+    this.props.markFormAsSubmitted();
+    if (this.props.formMetadata.valid) {
+      MyAPI.send(this.props.formData);
+    }
   }
 
   render() {
     return (
-      <Form
-        data={this.state.data}
-        metadata={this.state.metadata}
-        validator={this.validate}
-        onValidSubmit={this.handleSubmit}>
-
-        <Input type='text' name='username' label='Username' />
-        <Input type='text' name='password' label='Password' />
-        <Input type='text' name='password_confirmation' label='Password Confirmation' />
-        <Textarea name='biography' label='Biography' />
-        <button>Submit</button>
-
-      </Form>
-    );
-  }
-}
-
-```
-
-Note that the above is almost exactly what the `StatefulForm` component does.
-
-### Usage with Flux / Redux:
-
-Example coming soon. It's already possible to do this manually since the onChange callback returns an "action" string that fits naturally as an action type, but I'd like to write some helper functions to make it less verbose. This will most likely be a separate library.
-
-
-### Creating Non-Input Components:
-
-If you want to create a component that isn't an input, but still needs access to the form data or metadata, you can use the `wrapFormHelper` function. An example of this would be an error list (although it is easy to put your errors inline next to your fields).
-
-```javascript
-import React from 'react';
-import { wrapFormHelper } from 'nice-form';
-import { isEmpty, map } from 'lodash';
-
-// using new function react component syntax
-function ErrorMessageList({data, metadata}) {
-  if  (metadata && metadata.formHasBeenSubmitted && !isEmpty(metadata.errors)) {
-    return (
-      <ul className='ErrorMessageList'>
-        { map(metadata.errors, (errMsg, errKey) => <li key={errKey}>{`${errKey} ${errMsg}`}</li>) }
-      </ul>
-    );
-  }
-}
-
-export default wrapFormHelper(ErrorMessageList);
-
-```
-
-And then in your form:
-
-
-```javascript
-  // ...
-  render() {
-    return (
-      <Form initialData={this.props.myData} onValidSubmit={this.handleSubmit}>
-        <ErrorMessageList />
-        <Input type='text' name='foo' label='Foo' />
+      <Form onSubmit={this.handleSubmit} { ...this.props.getFormProps() } >
+        <Input {...this.props.getFieldProps('username') } label='Username' />
+        <Input {...this.props.getFieldProps('password') } label='Password' />
+        <Input {...this.props.getFieldProps('password_confirmation') } label='Password Confirmation' />
+        <Textarea {...this.props.getFieldProps('biography') } label='Biography' />
         <button>Submit</button>
       </Form>
     );
   }
+}
 ```
+
+#### Props Provided by the createForm higher order component
+
+| Prop                | Type     | Details                                                                  |
+| ------------------- | -------- | ------------------------------------------------------------------------ |
+| formData            | object   | Up-to-date form data                                                     |
+| formMetadata        | object   | Metadata for the form (validity, dirtiness, etc)                         |
+| getFieldProps       | function | Returns all necessary props for a field given the field name             |
+| markFormAsSubmitted | function | Call this function the first time that the user tries to submit the form |
+| resetFormData       | function | Reset the form back to the original state, or to the provided object.    |
+
+#### Props Provided by the getFieldProps function
+
+| Prop                 | Type     | Details                                                                                        |
+| -------------------- | -------- | ---------------------------------------------------------------------------------------------- |
+| error                | any      | Error message for the current field                                                            |
+| formHasBeenSubmitted | bool     | True if the use has attempted to submit the form                                               |
+| hasBlurred           | bool     | Has the user 'blurred' (focused then un-focused) the current field                             |
+| name                 | string   | Name of the field. Also used as the key in the form data object.                               |
+| onBlur               | function | Call this upon the user blurring the field                                                     |
+| onChange             | function | Call this on change with the latest value. Will still work with basic fields and event objects |
+| pristine             | bool     | Reset the form back to the original state, or to the provided object.                          |
+| valid                | function | True if the field does not have any errors (from the validator function)                       |
+| value                | any      | Current value of field                                                                         |

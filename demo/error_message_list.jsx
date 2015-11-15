@@ -1,8 +1,7 @@
 import React from 'react';
-import { wrapFormHelper } from '../src';
 import { map, isEmpty } from 'lodash';
 
-function ErrorMessageList({formData, formMetadata}) {
+function ErrorMessageList({ formMetadata }) {
   if (formMetadata && formMetadata.formHasBeenSubmitted && !isEmpty(formMetadata.errors)) {
     return (
       <div className='ErrorMessageList'>
@@ -23,4 +22,4 @@ function ErrorMessageList({formData, formMetadata}) {
   }
 };
 
-export default wrapFormHelper(ErrorMessageList);
+export default ErrorMessageList;

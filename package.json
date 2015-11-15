@@ -1,12 +1,12 @@
 {
-  "name": "nice-form",
+  "name": "react-form-helper",
   "version": "0.0.1",
-  "description": "Dead simple form builder for React.js",
+  "description": "Form helper component and functions for React.js that will help make your forms easier to manage and validate.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/adamalbrecht/nice-form.git"
+    "url": "https://github.com/adamalbrecht/react-form-helper.git"
   },
-  "main": "dist/index.js",
+  "main": "src/index.js",
   "scripts": {
     "prebuild": "rm -rf dist && mkdir dist",
     "build": "./node_modules/.bin/webpack --config webpack.production.config.js",
@@ -28,11 +28,11 @@
     "react-dom": "^0.14.2"
   },
   "devDependencies": {
-    "lodash": "^3.10.1",
     "babel-core": "^5.8.23",
     "babel-eslint": "^4.1.1",
     "babel-loader": "^5.3.2",
     "chai-jquery": "^2.0.0",
+    "classnames": "2.2.0",
     "css-loader": "^0.18.0",
     "es5-shim": "^4.1.13",
     "eslint": "^1.4.1",
@@ -55,6 +55,7 @@
     "karma-sinon-chai": "^1.0.0",
     "karma-sourcemap-loader": "^0.3.5",
     "karma-webpack": "^1.7.0",
+    "lodash": "^3.10.1",
     "mocha": "^2.3.2",
     "normalize.css": "^3.0.3",
     "phantomjs": "^1.9.18",

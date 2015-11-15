@@ -29,7 +29,7 @@ module.exports = {
     filename: "index.js",
     path: path.join(__dirname, 'dist'),
     libraryTarget: 'umd',
-    library: 'nice-form'
+    library: 'react-form-helper'
   },
   module: {
     loaders: [
@@ -37,7 +37,7 @@ module.exports = {
     ]
   },
   plugins: [
-    new webpack.optimize.OccurenceOrderPlugin(),
+    // new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production')
     })
