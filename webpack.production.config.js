@@ -1,6 +1,5 @@
 var webpack = require('webpack');
 var path = require('path');
-var nodeModulesPath = path.resolve(__dirname, './node_modules');
 
 var reactExternal = {
   root: 'React',
@@ -26,7 +25,7 @@ module.exports = {
     'react-dom': reactDomExternal
   },
   output: {
-    filename: "index.js",
+    filename: "bundle.js",
     path: path.join(__dirname, 'dist'),
     libraryTarget: 'umd',
     library: 'react-form-helper'

@@ -6,7 +6,7 @@
     "type": "git",
     "url": "https://github.com/adamalbrecht/react-form-helper.git"
   },
-  "main": "src/index.js",
+  "main": "dist/bundle.js",
   "scripts": {
     "prebuild": "rm -rf dist && mkdir dist",
     "build": "./node_modules/.bin/webpack --config webpack.production.config.js",
