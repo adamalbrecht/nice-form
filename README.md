@@ -98,12 +98,13 @@ class UserProfilePage extends React.Component {
   }
 
   render() {
+    const { getFieldProps } = this.props;
     return (
       <Form onSubmit={this.handleSubmit} { ...this.props.getFormProps() } >
-        <Input {...this.props.getFieldProps('username') } label='Username' />
-        <Input {...this.props.getFieldProps('password') } label='Password' />
-        <Input {...this.props.getFieldProps('password_confirmation') } label='Password Confirmation' />
-        <Textarea {...this.props.getFieldProps('biography') } label='Biography' />
+        <Input { ...getFieldProps('username') } label='Username' />
+        <Input { ...getFieldProps('password') } label='Password' />
+        <Input { ...getFieldProps('password_confirmation') } label='Password Confirmation' />
+        <Textarea {...getFieldProps('biography') } label='Biography' />
         <button>Submit</button>
       </Form>
     );
