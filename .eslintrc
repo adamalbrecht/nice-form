@@ -15,7 +15,7 @@
   "rules": {
     "indent": [2, 2],
     "camelcase": 0,
-    "quotes": [ 1, "single" ],
+    "quotes": 0,
     "linebreak-style": [ 2, "unix" ],
     "semi": [ 1, "always" ],
     "no-console": 0,
